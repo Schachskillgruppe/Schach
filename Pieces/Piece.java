@@ -34,7 +34,7 @@ public abstract class Piece {
      * @param position : position for which it is checked if it can be filled
      * @return if there could be another position beyond this one
      */
-    private boolean canWalk(boolean toCheck, Position position) {
+    public boolean canWalk(boolean toCheck, Position position) {
         if (toCheck) {
             if (position.inRange() && board.getPiece(position) == null) {
                 this.possibleMoves.add(position);
