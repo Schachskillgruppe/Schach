@@ -19,4 +19,13 @@ public class Board {
         }
         return null;
     }
+
+    public void removePiece(Position position){
+        for (int i = 0; i < this.allPieces.size(); i++){
+            if(this.allPieces.get(i).pos == position){
+                this.allPieces.remove(i);
+                return;
+            }
+        }
+    }
 }

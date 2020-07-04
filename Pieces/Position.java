@@ -7,6 +7,12 @@ public class Position {
         this.yPos = yPos;
     }
 
+    //copy Constructor
+    public Position(Position position) {
+        this.xPos = position.getxPos();
+        this.yPos = position.getyPos();
+    }
+
     public int getxPos() {
         return xPos;
     }
@@ -21,5 +27,9 @@ public class Position {
 
     public void setyPos(int yPos) {
         this.yPos = yPos;
+    }
+
+    public boolean inRange(){
+        return this.xPos >= 0 && this.xPos <= 7 && this.yPos >= 0 && this.yPos <= 7;
     }
 }

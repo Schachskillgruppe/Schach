@@ -20,12 +20,30 @@ public abstract class Piece {
     public abstract void viewMoves();
 
     /**
-     * Move a piece to the specified Position
+     * Move a piece to the specified Position and slays the piece add the destination
      */
     public void Move(Position pos) {
+        board.removePiece(pos);
         if(this.possibleMoves.contains(pos)){
             this.pos = pos;
         }
+    }
+
+    /**
+     * @param toCheck : has this position to be checked
+     * @param position : position for which it is checked if it can be filled
+     * @return if there could be another position beyond this one
+     */
+    private boolean canWalk(boolean toCheck, Position position) {
+        if (toCheck) {
+            if (position.inRange() && board.getPiece(position) == null) {
+                this.possibleMoves.add(position);
+            } else if (position.inRange() && board.getPiece(position).owner != this.owner) {
+                this.possibleMoves.add(position);
+                return false;
+            } else return false;
+        }
+        return toCheck;
     }
 
     enum Owner {
