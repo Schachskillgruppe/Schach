@@ -6,27 +6,27 @@ public class Rook extends Piece {
 
     @Override
     public void viewMoves() {
-        this.possibleMoves.clear();
+        this.clearPossibleMoves();
         //sets a few needed temporary variables
         boolean topleft = true;
         boolean topright = true;
         boolean bottomleft = true;
         boolean bottomright = true;
-        Position tmpTL = new Position(this.position);
-        Position tmpTR = new Position(this.position);
-        Position tmpBL = new Position(this.position);
-        Position tmpBR = new Position(this.position);
+        Position tmpTL = new Position(this.getPosition());
+        Position tmpTR = new Position(this.getPosition());
+        Position tmpBL = new Position(this.getPosition());
+        Position tmpBR = new Position(this.getPosition());
 
         //checks all 4 directions
         for (int i = 1; i <= 7; i++) {
-            tmpTL.setxPos(this.position.getxPos() - i);
-            tmpTL.setyPos(this.position.getyPos() + i);
-            tmpTR.setxPos(this.position.getxPos() + i);
-            tmpTR.setyPos(this.position.getyPos() + i);
-            tmpBL.setxPos(this.position.getxPos() - i);
-            tmpBL.setyPos(this.position.getyPos() - i);
-            tmpBR.setxPos(this.position.getxPos() + i);
-            tmpBR.setyPos(this.position.getyPos() - i);
+            tmpTL.setxPos(this.getPosition().getxPos() - i);
+            tmpTL.setyPos(this.getPosition().getyPos() + i);
+            tmpTR.setxPos(this.getPosition().getxPos() + i);
+            tmpTR.setyPos(this.getPosition().getyPos() + i);
+            tmpBL.setxPos(this.getPosition().getxPos() - i);
+            tmpBL.setyPos(this.getPosition().getyPos() - i);
+            tmpBR.setxPos(this.getPosition().getxPos() + i);
+            tmpBR.setyPos(this.getPosition().getyPos() - i);
 
             topleft = canWalk(topleft, tmpTL);
             topright = canWalk(topright, tmpTR);

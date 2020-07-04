@@ -2,10 +2,10 @@ import java.util.LinkedList;
 
 public abstract class Piece {
 
-    Owner owner;
-    Position position;
-    Board board;
-    LinkedList<Position> possibleMoves;
+    private final Owner owner;
+    private Position position;
+    private final Board board;
+    private final LinkedList<Position> possibleMoves;
 
     public Piece(Owner owner, Position position, Board board) {
         this.owner = owner;
@@ -33,9 +33,9 @@ public abstract class Piece {
      */
     public boolean canWalk(boolean toCheck, Position position) {
         if (toCheck) {
-            if (position.inRange() && board.getPiece(position) == null) {
+            if (this.position.inRange() && this.board.getPiece(position) == null) {
                 this.possibleMoves.add(new Position(position));
-            } else if (position.inRange() && board.getPiece(position).owner != this.owner) {
+            } else if (this.position.inRange() && this.board.getPiece(position).owner != this.owner) {
                 this.possibleMoves.add(new Position(position));
                 return false;
             } else return false;
@@ -45,6 +45,29 @@ public abstract class Piece {
 
     @Override
     public abstract String toString();
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public LinkedList<Position> getPossibleMoves() {
+        return possibleMoves;
+    }
+    public void addPossibleMove(Position position){
+        this.possibleMoves.add(position);
+    }
+
+    public void clearPossibleMoves(){
+        this.possibleMoves.clear();
+    }
 
     enum Owner {
         Black,

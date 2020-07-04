@@ -58,7 +58,7 @@ public class Board {
         for (; ; ) {
             System.out.println(board.activePlayer + " Select a piece [xPos yPos]");
             boolean first = true;
-            Position target = null;
+            Position target;
             Piece piece = null;
             while (true) {
                 try {
@@ -112,7 +112,7 @@ public class Board {
 
     public Piece getPiece(Position position) {
         for (Piece piece : allPieces) {
-            if (piece.position.equals(position)) {
+            if (piece.getPosition().equals(position)) {
                 return piece;
             }
         }
@@ -121,7 +121,7 @@ public class Board {
 
     private void removePiece(Position position) {
         for (int i = 0; i < this.allPieces.size(); i++) {
-            if (this.allPieces.get(i).position.equals(position)) {
+            if (this.allPieces.get(i).getPosition().equals(position)) {
                 this.allPieces.remove(i);
                 return;
             }
@@ -130,7 +130,7 @@ public class Board {
 
     private Piece selectPiece(Piece.Owner owner, Position position) {
         for (Piece piece : this.allPieces) {
-            if (piece.position.equals(position) && piece.owner == owner) {
+            if (piece.getPosition().equals(position) && piece.getOwner() == owner) {
                 piece.viewMoves();
                 this.printBoard(piece);
                 return piece;
@@ -140,7 +140,7 @@ public class Board {
     }
 
     private boolean movePiece(@NotNull Piece piece, Position position) {
-        if (piece.possibleMoves.contains(position)) {
+        if (piece.getPossibleMoves().contains(position)) {
             this.removePiece(position);
             piece.Move(position);
             this.printBoard();
@@ -172,7 +172,7 @@ public class Board {
             //iterating over the x-Axis
             for (int x = -1; x <= 7; x++) {
                 if (x == -1) System.out.print(y + " |");
-                else if (piece.possibleMoves.contains(new Position(x, y))) {
+                else if (piece.getPossibleMoves().contains(new Position(x, y))) {
                     System.out.print("X  ");
                 } else if (this.getPiece(new Position(x, y)) == null) {
                     System.out.print("0  ");

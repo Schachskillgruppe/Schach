@@ -7,22 +7,22 @@ public class Tower extends Piece {
     @Override
     public void viewMoves() {
         //sets a few needed temporary variables
-        this.possibleMoves.clear();
+        this.clearPossibleMoves();
         boolean left = true;
         boolean right = true;
         boolean up = true;
         boolean down = true;
-        Position tmpL = new Position(this.position);
-        Position tmpR = new Position(this.position);
-        Position tmpU = new Position(this.position);
-        Position tmpD = new Position(this.position);
+        Position tmpL = new Position(this.getPosition());
+        Position tmpR = new Position(this.getPosition());
+        Position tmpU = new Position(this.getPosition());
+        Position tmpD = new Position(this.getPosition());
 
         //checks all 4 directions
         for (int i = 1; i <= 7; i++) {
-            tmpL.setxPos(this.position.getxPos() - i);
-            tmpR.setxPos(this.position.getxPos() + i);
-            tmpU.setyPos(this.position.getyPos() + i);
-            tmpD.setyPos(this.position.getyPos() - i);
+            tmpL.setxPos(this.getPosition().getxPos() - i);
+            tmpR.setxPos(this.getPosition().getxPos() + i);
+            tmpU.setyPos(this.getPosition().getyPos() + i);
+            tmpD.setyPos(this.getPosition().getyPos() - i);
 
             left = canWalk(left, tmpL);
             right = canWalk(right, tmpR);

@@ -6,7 +6,7 @@ public class Queen extends Piece {
 
     @Override
     public void viewMoves() {
-        this.possibleMoves.clear();
+        this.clearPossibleMoves();
         //sets a few needed temporary variables
         boolean topleft = true;
         boolean topright = true;
@@ -16,29 +16,29 @@ public class Queen extends Piece {
         boolean right = true;
         boolean up = true;
         boolean down = true;
-        Position tmpTL = new Position(this.position);
-        Position tmpTR = new Position(this.position);
-        Position tmpBL = new Position(this.position);
-        Position tmpBR = new Position(this.position);
-        Position tmpL = new Position(this.position);
-        Position tmpR = new Position(this.position);
-        Position tmpU = new Position(this.position);
-        Position tmpD = new Position(this.position);
+        Position tmpTL = new Position(this.getPosition());
+        Position tmpTR = new Position(this.getPosition());
+        Position tmpBL = new Position(this.getPosition());
+        Position tmpBR = new Position(this.getPosition());
+        Position tmpL = new Position(this.getPosition());
+        Position tmpR = new Position(this.getPosition());
+        Position tmpU = new Position(this.getPosition());
+        Position tmpD = new Position(this.getPosition());
 
         //checks all 8 directions
         for (int i = 1; i <= 7; i++) {
-            tmpTL.setxPos(this.position.getxPos() - i);
-            tmpTL.setyPos(this.position.getyPos() + i);
-            tmpTR.setxPos(this.position.getxPos() + i);
-            tmpTR.setyPos(this.position.getyPos() + i);
-            tmpBL.setxPos(this.position.getxPos() - i);
-            tmpBL.setyPos(this.position.getyPos() - i);
-            tmpBR.setxPos(this.position.getxPos() + i);
-            tmpBR.setyPos(this.position.getyPos() - i);
-            tmpL.setxPos(this.position.getxPos() - i);
-            tmpR.setxPos(this.position.getxPos() + i);
-            tmpU.setyPos(this.position.getyPos() + i);
-            tmpD.setyPos(this.position.getyPos() - i);
+            tmpTL.setxPos(this.getPosition().getxPos() - i);
+            tmpTL.setyPos(this.getPosition().getyPos() + i);
+            tmpTR.setxPos(this.getPosition().getxPos() + i);
+            tmpTR.setyPos(this.getPosition().getyPos() + i);
+            tmpBL.setxPos(this.getPosition().getxPos() - i);
+            tmpBL.setyPos(this.getPosition().getyPos() - i);
+            tmpBR.setxPos(this.getPosition().getxPos() + i);
+            tmpBR.setyPos(this.getPosition().getyPos() - i);
+            tmpL.setxPos(this.getPosition().getxPos() - i);
+            tmpR.setxPos(this.getPosition().getxPos() + i);
+            tmpU.setyPos(this.getPosition().getyPos() + i);
+            tmpD.setyPos(this.getPosition().getyPos() - i);
 
             topleft = canWalk(topleft, tmpTL);
             topright = canWalk(topright, tmpTR);
