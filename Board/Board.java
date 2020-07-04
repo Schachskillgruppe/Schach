@@ -10,7 +10,14 @@ public class Board {
 
     public Board() {
         this.allPieces = new LinkedList<>();
+        this.activePlayer = Piece.Owner.White;
         this.input = new Scanner(System.in);
+    }
+
+    public Board(Board that){
+        this.activePlayer = that.activePlayer;
+        this.allPieces  = new LinkedList<>(that.allPieces);
+        this.input = that.input;
     }
 
     public static void main(String[] args) {
@@ -30,7 +37,7 @@ public class Board {
                     } else if (x == 3) {
                         board.addPiece(new Queen(Piece.Owner.Black, new Position(x, y), board));
                     } else {
-                        board.addPiece(new Tower(Piece.Owner.Black, new Position(x, y), board));
+                        board.addPiece(new King(Piece.Owner.Black, new Position(x, y), board));
                     }
                 } else board.addPiece(new Pawn(Piece.Owner.Black, new Position(x, y), board));
             }
@@ -45,7 +52,7 @@ public class Board {
                     } else if (x == 3) {
                         board.addPiece(new Queen(Piece.Owner.White, new Position(x, y), board));
                     } else {
-                        board.addPiece(new Tower(Piece.Owner.White, new Position(x, y), board));
+                        board.addPiece(new King(Piece.Owner.White, new Position(x, y), board));
                     }
                 } else board.addPiece(new Pawn(Piece.Owner.White, new Position(x, y), board));
             }
@@ -54,7 +61,7 @@ public class Board {
         //System.out.println(board.getPiece(new Position(1,0)).toString());
 
         board.printBoard();
-        board.activePlayer = Piece.Owner.White;
+
         for (; ; ) {
             System.out.println(board.activePlayer + " Select a piece [xPos yPos]");
             boolean first = true;
@@ -119,13 +126,8 @@ public class Board {
         return null;
     }
 
-    private void removePiece(Position position) {
-        for (int i = 0; i < this.allPieces.size(); i++) {
-            if (this.allPieces.get(i).getPosition().equals(position)) {
-                this.allPieces.remove(i);
-                return;
-            }
-        }
+    public void removePiece(Position position) {
+        this.allPieces.remove(this.getPiece(position));
     }
 
     private Piece selectPiece(Piece.Owner owner, Position position) {
@@ -181,5 +183,9 @@ public class Board {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public LinkedList<Piece> getAllPieces() {
+        return allPieces;
     }
 }
