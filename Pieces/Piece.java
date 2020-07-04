@@ -3,13 +3,13 @@ import java.util.LinkedList;
 public abstract class Piece {
 
     Owner owner;
-    Position pos;
+    Position position;
     Board board;
     LinkedList<Position> possibleMoves;
 
-    public Piece(Owner owner, Position pos, Board board) {
+    public Piece(Owner owner, Position position, Board board) {
         this.owner = owner;
-        this.pos = pos;
+        this.position = position;
         this.board = board;
         this.possibleMoves = new LinkedList<>();
     }
@@ -22,11 +22,13 @@ public abstract class Piece {
     /**
      * Move a piece to the specified Position and slays the piece add the destination
      */
-    public void Move(Position pos) {
+    public boolean Move(Position pos) {
         board.removePiece(pos);
         if(this.possibleMoves.contains(pos)){
-            this.pos = pos;
+            this.position = pos;
+            return true;
         }
+        return false;
     }
 
     /**
@@ -37,14 +39,17 @@ public abstract class Piece {
     public boolean canWalk(boolean toCheck, Position position) {
         if (toCheck) {
             if (position.inRange() && board.getPiece(position) == null) {
-                this.possibleMoves.add(position);
+                this.possibleMoves.add(new Position(position));
             } else if (position.inRange() && board.getPiece(position).owner != this.owner) {
-                this.possibleMoves.add(position);
+                this.possibleMoves.add(new Position(position));
                 return false;
             } else return false;
         }
         return toCheck;
     }
+
+    @Override
+    public abstract String toString();
 
     enum Owner {
         Black,
