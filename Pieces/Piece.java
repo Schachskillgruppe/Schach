@@ -20,15 +20,10 @@ public abstract class Piece {
     public abstract void viewMoves();
 
     /**
-     * Move a piece to the specified Position and slays the piece add the destination
+     * Move a piece to the specified Position
      */
-    public boolean Move(Position pos) {
-        board.removePiece(pos);
-        if(this.possibleMoves.contains(pos)){
-            this.position = pos;
-            return true;
-        }
-        return false;
+    public void Move(Position pos) {
+        this.position = pos;
     }
 
     /**

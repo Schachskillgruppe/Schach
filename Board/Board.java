@@ -55,41 +55,58 @@ public class Board {
 
         board.printBoard();
         board.activePlayer = Piece.Owner.White;
-        for(;;) {
-            System.out.println(board.activePlayer + " Select a piece [xPos] press Enter [yPos]");
-            Position target = board.readTarget();
+        for (; ; ) {
+            System.out.println(board.activePlayer + " Select a piece [xPos yPos]");
+            boolean first = true;
+            Position target = null;
+            Piece piece = null;
+            while (true) {
+                try {
+                    if(first) {
+                        target = board.readTarget();
+                        piece = board.selectPiece(board.activePlayer, target);
+                        first = false;
+                    }
 
-            Piece piece = board.selectPiece(board.activePlayer, target);
-            while (piece == null || piece.possibleMoves.isEmpty()) {
-                System.out.println("Not a valid target. Try again [xPos] press Enter [yPos]");
-                target = board.readTarget();
-                piece = board.selectPiece(board.activePlayer, target);
-            }
+                    if (piece == null) {
+                        System.out.println("Select a piece again [xPos yPos]");
+                        target = board.readTarget();
+                        piece = board.selectPiece(board.activePlayer, target);
+                        continue;
+                    }
 
-            System.out.println("Select a possible move (marked with 'X') [xPos] press Enter [yPos]");
-            target = board.readTarget();
-            while (!board.movePiece(piece, new Position(target))) {
-                target = board.readTarget();
+                    System.out.println("Select a possible move (marked with 'X') or a different piece of yours [xPos yPos]");
+                    target = board.readTarget();
+                    if (board.movePiece(piece, new Position(target))) {
+                        break;
+                    }
+                    piece = board.selectPiece(board.activePlayer, target);
+                } catch (NumberFormatException nfe) {
+                    System.err.println("not a number try again");
+                }
             }
             board.nextPlayer();
         }
     }
 
-    private void nextPlayer(){
-        if(this.activePlayer == Piece.Owner.White){
+    private void nextPlayer() {
+        if (this.activePlayer == Piece.Owner.White) {
             this.activePlayer = Piece.Owner.Black;
             return;
         }
         this.activePlayer = Piece.Owner.White;
     }
 
-    private @NotNull Position readTarget() {
-        int xPos = this.input.nextInt();
-        int yPos = this.input.nextInt();
-        return new Position(xPos, yPos);
+    private @NotNull Position readTarget() throws NumberFormatException {
+        String pos = this.input.nextLine();
+        String[] XY = pos.split(" ");
+        if (XY.length != 2) return new Position(-1, -1);
+        int x = Integer.parseInt(XY[0]);
+        int y = Integer.parseInt(XY[1]);
+        return new Position(x, y);
     }
 
-    public void addPiece(Piece piece) {
+    private void addPiece(Piece piece) {
         this.allPieces.add(piece);
     }
 
@@ -102,7 +119,7 @@ public class Board {
         return null;
     }
 
-    public void removePiece(Position position) {
+    private void removePiece(Position position) {
         for (int i = 0; i < this.allPieces.size(); i++) {
             if (this.allPieces.get(i).position.equals(position)) {
                 this.allPieces.remove(i);
@@ -111,7 +128,7 @@ public class Board {
         }
     }
 
-    public Piece selectPiece(Piece.Owner owner, Position position) {
+    private Piece selectPiece(Piece.Owner owner, Position position) {
         for (Piece piece : this.allPieces) {
             if (piece.position.equals(position) && piece.owner == owner) {
                 piece.viewMoves();
@@ -122,17 +139,17 @@ public class Board {
         return null;
     }
 
-    public boolean movePiece(@NotNull Piece piece, Position position) {
-        this.removePiece(position);
-        if (piece.Move(position)) {
+    private boolean movePiece(@NotNull Piece piece, Position position) {
+        if (piece.possibleMoves.contains(position)) {
+            this.removePiece(position);
+            piece.Move(position);
             this.printBoard();
             return true;
         }
-        System.out.println("Not a possible move try again");
         return false;
     }
 
-    public void printBoard() {
+    private void printBoard() {
         //iterating over the y-Axis
         System.out.println("__|0__1__2__3__4__5__6__7");
         for (int y = 0; y <= 7; y++) {
@@ -148,7 +165,7 @@ public class Board {
         System.out.println();
     }
 
-    public void printBoard(Piece piece) {
+    private void printBoard(Piece piece) {
         //iterating over the y-Axis
         System.out.println("__|0__1__2__3__4__5__6__7");
         for (int y = 0; y <= 7; y++) {
