@@ -25,38 +25,7 @@ public class Board {
         Board board = new Board();
 
         //fills the board with the initial Position of all Pieces
-        for (int x = 0; x <= 7; x++) {
-            for (int y = 0; y <= 1; y++) {
-                if (y == 0) {
-                    if (x == 0 || x == 7) {
-                        board.addPiece(new Tower(Piece.Owner.Black, new Position(x, y), board));
-                    } else if (x == 1 || x == 6) {
-                        board.addPiece(new Knight(Piece.Owner.Black, new Position(x, y), board));
-                    } else if (x == 2 || x == 5) {
-                        board.addPiece(new Rook(Piece.Owner.Black, new Position(x, y), board));
-                    } else if (x == 3) {
-                        board.addPiece(new Queen(Piece.Owner.Black, new Position(x, y), board));
-                    } else {
-                        board.addPiece(new King(Piece.Owner.Black, new Position(x, y), board));
-                    }
-                } else board.addPiece(new Pawn(Piece.Owner.Black, new Position(x, y), board));
-            }
-            for (int y = 6; y <= 7; y++) {
-                if (y == 7) {
-                    if (x == 0 || x == 7) {
-                        board.addPiece(new Tower(Piece.Owner.White, new Position(x, y), board));
-                    } else if (x == 1 || x == 6) {
-                        board.addPiece(new Knight(Piece.Owner.White, new Position(x, y), board));
-                    } else if (x == 2 || x == 5) {
-                        board.addPiece(new Rook(Piece.Owner.White, new Position(x, y), board));
-                    } else if (x == 3) {
-                        board.addPiece(new Queen(Piece.Owner.White, new Position(x, y), board));
-                    } else {
-                        board.addPiece(new King(Piece.Owner.White, new Position(x, y), board));
-                    }
-                } else board.addPiece(new Pawn(Piece.Owner.White, new Position(x, y), board));
-            }
-        }
+        board.prepBoard(board);
 
         //System.out.println(board.getPiece(new Position(1,0)).toString());
 
@@ -93,6 +62,41 @@ public class Board {
                 }
             }
             board.nextPlayer();
+        }
+    }
+
+    private void prepBoard(Board board){
+        for (int x = 0; x <= 7; x++) {
+            for (int y = 0; y <= 1; y++) {
+                if (y == 0) {
+                    if (x == 0 || x == 7) {
+                        board.addPiece(new Rook(Piece.Owner.Black, new Position(x, y), board));
+                    } else if (x == 1 || x == 6) {
+                        board.addPiece(new Knight(Piece.Owner.Black, new Position(x, y), board));
+                    } else if (x == 2 || x == 5) {
+                        board.addPiece(new Bishop(Piece.Owner.Black, new Position(x, y), board));
+                    } else if (x == 3) {
+                        board.addPiece(new Queen(Piece.Owner.Black, new Position(x, y), board));
+                    } else {
+                        board.addPiece(new King(Piece.Owner.Black, new Position(x, y), board));
+                    }
+                } else board.addPiece(new Pawn(Piece.Owner.Black, new Position(x, y), board));
+            }
+            for (int y = 6; y <= 7; y++) {
+                if (y == 7) {
+                    if (x == 0 || x == 7) {
+                        board.addPiece(new Rook(Piece.Owner.White, new Position(x, y), board));
+                    } else if (x == 1 || x == 6) {
+                        board.addPiece(new Knight(Piece.Owner.White, new Position(x, y), board));
+                    } else if (x == 2 || x == 5) {
+                        board.addPiece(new Bishop(Piece.Owner.White, new Position(x, y), board));
+                    } else if (x == 3) {
+                        board.addPiece(new Queen(Piece.Owner.White, new Position(x, y), board));
+                    } else {
+                        board.addPiece(new King(Piece.Owner.White, new Position(x, y), board));
+                    }
+                } else board.addPiece(new Pawn(Piece.Owner.White, new Position(x, y), board));
+            }
         }
     }
 

@@ -26,11 +26,18 @@ public class King extends Piece {
                 Board tmpBoard = new Board(this.getBoard());
                 tmpBoard.removePiece(position);
                 for (Piece piece : tmpBoard.getAllPieces()) {
-                    if (this.getOwner() != piece.getOwner() && !piece.toString().equals("*")) {
-                        piece.viewMoves();
-                        if (piece.getPossibleMoves().contains(position)) {
-                            safe = false;
-                            break;
+                    if (this.getOwner() != piece.getOwner()) {
+                        if (!piece.toString().equals("*")) {
+                            piece.viewMoves();
+                            if (piece.getPossibleMoves().contains(position)) {
+                                safe = false;
+                                break;
+                            } else {
+                                if(piece.getPosition().equals(position)){
+                                    safe = false;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -38,6 +45,27 @@ public class King extends Piece {
             }
         }
 
+    }
+
+    public boolean dangered(){
+        boolean safe = true;
+        for (Piece piece : this.getBoard().getAllPieces()) {
+            if (this.getOwner() != piece.getOwner()) {
+                if (!piece.toString().equals("*")) {
+                    piece.viewMoves();
+                    if (piece.getPossibleMoves().contains(this.getPosition())) {
+                        safe = false;
+                        break;
+                    } else {
+                        if(piece.getPosition().equals(this.getPosition())){
+                            safe = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return !safe;
     }
 
     @Override
